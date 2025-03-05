@@ -48,7 +48,7 @@
 </nav>
 
 <div class="row">
-    <div class="col">
+    <div class="col-9">
         <div class="card" style="width: 18rem;">
             <div class="card-body">
                 {% for item in student %}
@@ -58,7 +58,6 @@
                 <a href="#" class="card-link">{{item.phone}}</a>
                 <a href="#" class="card-link">{{item.email}}</a>
                 <a href="{% url 'download_student_pdf' item.id %}" class="btn btn-primary">PDF Yuklab Olish</a>
-
                 <a href="{% url 'del_info' item.id %}" class="btn btn-primary">Talabani o'chirish</a>
                 {% endfor %}
             </div>

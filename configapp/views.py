@@ -77,11 +77,11 @@ def download_student_pdf(request, student_id):
     # 3. ReportLab canvas obyektini yaratish
     p = canvas.Canvas(response, pagesize=A4)  # A4 formatdagi sahifa
     width, height = A4  # Sahifaning kengligi va balandligi
-    p.setFont("Helvetica", 28)
+    p.setFont("Times-Roman", 28)
 
     # 4. Sarlavha qo'shish
     p.drawString(100, height - 50, "Talaba ma'lumotlari")
-    p.setFont("Helvetica", 24)
+    p.setFont("Times-Roman", 24)
 
     # 5. Talaba ma'lumotlarini qo'shish
     p.drawString(100, height - 80, f"Ism: {student.name}")
@@ -114,3 +114,22 @@ def download_student_pdf(request, student_id):
     p.save()
 
     return response
+
+def del_info(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+    student.delete()
+    return redirect('index')
+
+def update_new(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+    if request.method == 'POST':
+        form = NewForm(request.POST, instance=student)
+        if form.is_valid():
+            # news = News.objects.create(**form.cleaned_data)
+            form.save()
+            return redirect('home')
+
+    else:
+        form = NewForm(instance=student)
+    return render(request, 'update.html', context={'form': form, 'student': student})
+

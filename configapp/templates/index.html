@@ -59,24 +59,35 @@
         </ul>
 
     </div>
-    <div class="col-9">
+    <div class="col-md-4 mb-3">
         {% for item in student %}
         <div class="row">
-    <div class="col-9 mt-4">
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">{{item.name}}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{item.sur_name}}</h6>
-                <p class="card-text">Yoshi {{item.age}}</p>
-                <a href="#" class="card-link">{{item.phone}}</a>
-                <a href="#" class="card-link">{{item.email}}</a>
-            </div>
-
+            <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{item.name}}</h5>
+            <p class="card-text">{{item.sur_name}}</p>
+            <p class="card-text">{{item.age}}</p>
+            <p class="card-text">{{item.phone}}</p>
+            <p class="card-text">{{item.email}}</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
         </div>
     </div>
-</div>
+<!--            <div class="col-md-4 mb-3">-->
+<!--                <div class="card" style="width: 18rem;">-->
+<!--                    <div class="card-body">-->
+<!--                        <h5 class="card-title">{{item.name}}</h5>-->
+<!--                        <h6 class="card-subtitle mb-2 text-muted">{{item.sur_name}}</h6>-->
+<!--                        <p class="card-text">Yoshi {{item.age}}</p>-->
+<!--                        <a href="#" class="card-link">{{item.phone}}</a>-->
+<!--                        <a href="#" class="card-link">{{item.email}}</a>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--            </div>-->
+        </div>
         {% endfor%}
     </div>
+
 </div>
 
 
