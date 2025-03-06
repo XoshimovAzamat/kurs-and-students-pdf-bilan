@@ -57,9 +57,11 @@
                 <p class="card-text">Yoshi {{item.age}}</p>
                 <a href="#" class="card-link">{{item.phone}}</a>
                 <a href="#" class="card-link">{{item.email}}</a>
-                <a href="{% url 'download_student_pdf' item.id %}" class="btn btn-primary">PDF Yuklab Olish</a>
+                <div class="d-flex gap-2 mt-2">
+                    <a href="{% url 'download_student_pdf' item.id %}" class="btn btn-primary">PDF Yuklab Olish</a>
+                    <a href="{% url 'del_info' item.id %}" class="btn btn-danger">Talabani o'chirish</a>
+                </div>
 
-                <a href="{% url 'del_info' item.id %}" class="btn btn-primary">Talabani o'chirish</a>
                 {% endfor %}
             </div>
 

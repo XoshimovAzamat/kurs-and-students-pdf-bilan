@@ -1,3 +1,5 @@
+from lib2to3.fixes.fix_input import context
+
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from .forms import *
@@ -7,37 +9,60 @@ import qrcode
 from reportlab.lib.utils import ImageReader
 from io import BytesIO
 from reportlab.lib.pagesizes import A4
+from django.views.generic import ListView
 
 
-def index(request):
-    kurs = Kurs.objects.all()
-    student = Student.objects.all()
-    context = {
-        'kurs': kurs,
-        'student': student,
+class Index(ListView):
+    model = Kurs
+    template_name = 'index.html'
+    context_object_name = 'kurs'
 
-    }
-    return render(request, 'index.html', context=context)
-
-
-def kursinfo(request, kurs_id):
-    student = Student.objects.filter(pk=kurs_id)
-    kurs = Kurs.objects.all()
-    context = {
-        'kurs': kurs,
-        'student': student,
-    }
-    return render(request, 'kursinfo.html', context=context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['student'] = Student.objects.all()
+        return context
 
 
-def student(request, student_id):
-    student = Student.objects.get(pk=student_id)
-    context = {
-        'student': student,
+# def index(request):
+#     kurs = Kurs.objects.all()
+#     student = Student.objects.all()
+#     context = {
+#         'kurs': kurs,
+#         'student': student,
+#
+#     }
+#     return render(request, 'index.html', context=context)
 
-    }
+class Kursinfo(ListView):
+    model = Kurs
+    template_name = 'kursinfo.html'
+    context_object_name = 'kurs'
 
-    return render(request, 'student.html', context=context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        kurs_id = self.kwargs.get('kurs_id')
+        context['student'] = Student.objects.filter(kurs__id=kurs_id)  # Shu kursga tegishli talabalar
+        return context
+
+
+# def kursinfo(request, kurs_id):
+#     student = Student.objects.filter(pk=kurs_id)
+#     kurs = Kurs.objects.all()
+#     context = {
+#         'kurs': kurs,
+#         'student': student,
+#     }
+#     return render(request, 'kursinfo.html', context=context)
+
+
+# def student(request, student_id):
+#     student = Student.objects.get(pk=student_id)
+#     context = {
+#         'student': student,
+#
+#     }
+#
+#     return render(request, 'student.html', context=context)
 
 
 def add_kurs(request):
@@ -115,10 +140,12 @@ def download_student_pdf(request, student_id):
 
     return response
 
+
 def del_info(request, student_id):
     student = get_object_or_404(Student, id=student_id)
     student.delete()
     return redirect('index')
+
 
 def update_new(request, student_id):
     student = get_object_or_404(Student, id=student_id)
@@ -132,4 +159,3 @@ def update_new(request, student_id):
     else:
         form = NewForm(instance=student)
     return render(request, 'update.html', context={'form': form, 'student': student})
-

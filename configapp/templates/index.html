@@ -46,47 +46,44 @@
         </div>
     </div>
 </nav>
+<div class="container">
+    <div class="row">
+        <!-- Kurslar ro‘yxati chap tomonda -->
+        <div class="col-md-3">
+            <ul class="list-group">
+                <li class="list-group-item active" aria-current="true">Kurslar</li>
+                {% for item in kurs %}
+                <li class="list-group-item"><a href="{% url 'kursinfo' item.pk %}">{{ item.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
 
-<div class="row">
-    <div class="col-3">
-        <ul class="list-group">
-            <li class="list-group-item active" aria-current="true">Kurslar</li>
-            {% for item in kurs %}
-
-            <li class="list-group-item"><a href="{% url 'kursinfo' item.pk %}">{{item.title}}</a></li>
-
-            {% endfor %}
-        </ul>
-
-    </div>
-    <div class="col-md-4 mb-3">
-        {% for item in student %}
-        <div class="row">
-            <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">{{item.name}}</h5>
-            <p class="card-text">{{item.sur_name}}</p>
-            <p class="card-text">{{item.age}}</p>
-            <p class="card-text">{{item.phone}}</p>
-            <p class="card-text">{{item.email}}</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+        <!-- Talabalar kartalari yonma-yon chiqadi -->
+        <div class="col-md-9">
+            <div class="row">
+                {% for item in student %}
+                <div class="col-md-4 mb-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.name }}</h5>
+                            <p class="card-text">{{ item.sur_name }}</p>
+                            <p class="card-text">{{ item.age }}</p>
+                            <p class="card-text">{{ item.phone }}</p>
+                            <p class="card-text">{{ item.email }}</p>
+                            <div class="d-flex gap-2 mt-2">
+                                <a href="{% url 'download_student_pdf' item.id %}" class="btn btn-primary">PDF Yuklab Olish</a>
+                                <a href="{% url 'del_info' item.id %}" class="btn btn-danger">Talabani o'chirish</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
-<!--            <div class="col-md-4 mb-3">-->
-<!--                <div class="card" style="width: 18rem;">-->
-<!--                    <div class="card-body">-->
-<!--                        <h5 class="card-title">{{item.name}}</h5>-->
-<!--                        <h6 class="card-subtitle mb-2 text-muted">{{item.sur_name}}</h6>-->
-<!--                        <p class="card-text">Yoshi {{item.age}}</p>-->
-<!--                        <a href="#" class="card-link">{{item.phone}}</a>-->
-<!--                        <a href="#" class="card-link">{{item.email}}</a>-->
-<!--                    </div>-->
+</div>
 
-<!--                </div>-->
-<!--            </div>-->
-        </div>
-        {% endfor%}
-    </div>
+
 
 </div>
 
